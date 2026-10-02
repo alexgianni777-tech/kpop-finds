@@ -43,8 +43,17 @@ jobs:
           assert Path("assets/ads-config.js").exists()
           assert Path("assets/ads.js").exists()
           assert Path("privacy.html").exists()
+          assert Path("media-credits.html").exists()
+          assert index.count('class="artist-photo"') >= 7
+          assert index.count('class="video-link"') == 8
+          assert index.count("youtube.com/watch") >= 8
+          for artist in catalog:
+              assert artist.get("youtubeUrl"), artist["slug"]
+              if artist["slug"] != "kpop-demon-hunters":
+                  assert artist.get("artistImage"), artist["slug"]
+                  assert artist.get("photoSource"), artist["slug"]
 
-          for p in [Path("index.html"), Path("privacy.html"), *guides]:
+          for p in [Path("index.html"), Path("privacy.html"), Path("media-credits.html"), *guides]:
               html = p.read_text(encoding="utf-8")
               assert "<title>" in html
               assert "<meta name=\"description\"" in html

@@ -23,7 +23,14 @@
         "Photocard & display accessories",
         "BTS photocard binder holder"
       ]
-    ]
+    ],
+    "artistImage": "https://upload.wikimedia.org/wikipedia/commons/c/c5/BTS_performing_%22Not_Today%22_during_Speak_Yourself_tour_at_MetLife_Stadium%2C_18_May_2019_03.jpg",
+    "artistImageAlt": "BTS performing during the Speak Yourself tour in 2019",
+    "youtubeUrl": "https://www.youtube.com/watch?v=gdZLi9oWNZg",
+    "featuredSong": "Dynamite",
+    "photoCredit": "I DARE U JK",
+    "photoLicense": "CC BY 3.0",
+    "photoSource": "https://commons.wikimedia.org/wiki/File:BTS_performing_%22Not_Today%22_during_Speak_Yourself_tour_at_MetLife_Stadium,_18_May_2019_03.jpg"
   },
   {
     "slug": "blackpink",
@@ -49,7 +56,14 @@
         "Member-inspired gifts",
         "BLACKPINK Jennie Lisa Rose Jisoo merch"
       ]
-    ]
+    ],
+    "artistImage": "https://upload.wikimedia.org/wikipedia/commons/4/4b/Blackpink_World_Tour_Milan.jpg",
+    "artistImageAlt": "BLACKPINK performing on their world tour in Milan",
+    "youtubeUrl": "https://www.youtube.com/watch?v=CgCVZdcKcqY",
+    "featuredSong": "JUMP",
+    "photoCredit": "Yeagvr",
+    "photoLicense": "CC BY-SA 4.0",
+    "photoSource": "https://commons.wikimedia.org/wiki/File:Blackpink_World_Tour_Milan.jpg"
   },
   {
     "slug": "kpop-demon-hunters",
@@ -75,7 +89,14 @@
         "Soundtrack & posters",
         "KPop Demon Hunters soundtrack poster"
       ]
-    ]
+    ],
+    "artistImage": null,
+    "artistImageAlt": "",
+    "youtubeUrl": "https://www.youtube.com/watch?v=yebNIHKAC4A",
+    "featuredSong": "Golden",
+    "photoCredit": null,
+    "photoLicense": null,
+    "photoSource": null
   },
   {
     "slug": "stray-kids",
@@ -101,7 +122,14 @@
         "Tour shirts & hoodies",
         "Stray Kids tour merch hoodie shirt"
       ]
-    ]
+    ],
+    "artistImage": "https://upload.wikimedia.org/wikipedia/commons/1/1b/Stray_Kids_at_Incheon_Airport%2C_May_3%2C_2024.png",
+    "artistImageAlt": "Stray Kids at Incheon Airport in May 2024",
+    "youtubeUrl": "https://www.youtube.com/watch?v=0P0aQreFs8w",
+    "featuredSong": "Chk Chk Boom",
+    "photoCredit": "티비텐",
+    "photoLicense": "CC BY 3.0",
+    "photoSource": "https://commons.wikimedia.org/wiki/File:Stray_Kids_at_Incheon_Airport,_May_3,_2024.png"
   },
   {
     "slug": "katseye",
@@ -127,7 +155,14 @@
         "Keyrings & small accessories",
         "KATSEYE keychain merch"
       ]
-    ]
+    ],
+    "artistImage": "https://upload.wikimedia.org/wikipedia/commons/a/aa/Katseye_at_Wango_Tango_2025.jpg",
+    "artistImageAlt": "KATSEYE at Wango Tango in 2025",
+    "youtubeUrl": "https://www.youtube.com/watch?v=PkMKJEkE8Mo",
+    "featuredSong": "Gnarly",
+    "photoCredit": "Warmtoned",
+    "photoLicense": "CC BY 4.0",
+    "photoSource": "https://commons.wikimedia.org/wiki/File:Katseye_at_Wango_Tango_2025.jpg"
   },
   {
     "slug": "enhypen",
@@ -153,7 +188,14 @@
         "Tour-style apparel",
         "ENHYPEN tour hoodie shirt merch"
       ]
-    ]
+    ],
+    "artistImage": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Enhypen_members.jpg",
+    "artistImageAlt": "Members of ENHYPEN",
+    "youtubeUrl": "https://www.youtube.com/watch?v=wXFLzODIdUI",
+    "featuredSong": "Bite Me",
+    "photoCredit": "BELIFT LAB",
+    "photoLicense": "CC0 1.0",
+    "photoSource": "https://commons.wikimedia.org/wiki/File:Enhypen_members.jpg"
   },
   {
     "slug": "aespa",
@@ -179,7 +221,14 @@
         "Concert apparel & accessories",
         "aespa tour merch shirt bag"
       ]
-    ]
+    ],
+    "artistImage": "https://upload.wikimedia.org/wikipedia/commons/8/85/Aespa_01.jpg",
+    "artistImageAlt": "aespa performing on stage",
+    "youtubeUrl": "https://www.youtube.com/watch?v=SkP_MvTKTJM",
+    "featuredSong": "Supernova",
+    "photoCredit": "David Lee",
+    "photoLicense": "CC BY 2.0",
+    "photoSource": "https://commons.wikimedia.org/wiki/File:Aespa_01.jpg"
   },
   {
     "slug": "twice",
@@ -205,6 +254,13 @@
         "Tour shirts & apparel",
         "TWICE world tour merch shirt hoodie"
       ]
-    ]
+    ],
+    "artistImage": "https://commons.wikimedia.org/wiki/Special:Redirect/file/TWICE_in_Las_Vegas_04.jpg",
+    "artistImageAlt": "TWICE performing in Las Vegas",
+    "youtubeUrl": "https://www.youtube.com/watch?v=Sz_wWzgh-vQ",
+    "featuredSong": "Strategy",
+    "photoCredit": "David Lee",
+    "photoLicense": "CC BY 2.0",
+    "photoSource": "https://commons.wikimedia.org/wiki/File:TWICE_in_Las_Vegas_04.jpg"
   }
 ]
