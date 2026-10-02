@@ -1,0 +1,78 @@
+name: Deploy K-Pop Finds
+
+on:
+  push:
+    branches: ["main"]
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Validate site
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import json, re
+
+          root = Path(".")
+          index = Path("index.html").read_text(encoding="utf-8")
+          catalog = json.loads(Path("catalog.json").read_text(encoding="utf-8"))
+          guides = list(Path("guides").glob("*.html"))
+
+          assert len(catalog) == 8
+          assert len(guides) == 10
+          assert "K‑Pop Finds" in index
+          assert "noindex,nofollow" in index
+          assert "As an Amazon Associate I earn from qualifying purchases." in index
+          assert Path("assets/style.css").exists()
+          assert Path("assets/app.js").exists()
+          assert Path("assets/ads-config.js").exists()
+          assert Path("assets/ads.js").exists()
+          assert Path("privacy.html").exists()
+
+          for p in [Path("index.html"), Path("privacy.html"), *guides]:
+              html = p.read_text(encoding="utf-8")
+              assert "<title>" in html
+              assert "<meta name=\"description\"" in html
+
+          for p in guides:
+              html = p.read_text(encoding="utf-8")
+              assert 'rel="sponsored nofollow noopener noreferrer"' in html
+
+          print("K-Pop Finds validation passed.")
+          PY
+      - name: Prepare static artifact
+        run: touch .nojekyll
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+        with:
+          enablement: true
+      - name: Upload site
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: "."
+
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
