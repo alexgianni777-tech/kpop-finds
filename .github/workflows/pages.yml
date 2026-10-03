@@ -37,10 +37,10 @@ jobs:
 
           assert len(catalog) == 8
           assert len(products) == 24
-          assert len(guides) == 10
+          assert len(guides) == 17
           assert len(watch_pages) == 8
           assert "K‑Pop Finds" in index
-          assert "noindex,nofollow" in index
+          assert "index,follow" in index
           assert "As an Amazon Associate I earn from qualifying purchases." in index
           assert Path("assets/style.css").exists()
           assert Path("assets/app.js").exists()
@@ -51,6 +51,8 @@ jobs:
           assert Path("products.html").exists()
           assert Path("watch.html").exists()
           assert Path("verified-products.json").exists()
+          assert Path("sitemap.xml").exists()
+          assert Path("robots.txt").exists()
           assert index.count('class="artist-photo"') >= 7
           assert index.count('class="video-link"') == 8
           assert index.count("youtube.com/watch") >= 8
@@ -67,11 +69,31 @@ jobs:
 
           for p in guides:
               html = p.read_text(encoding="utf-8")
-              assert 'rel="sponsored nofollow noopener noreferrer"' in html
+              assert 'rel="canonical"' in html
+              if p.name != "index.html":
+                  assert 'rel="sponsored nofollow noopener noreferrer"' in html
+
+          for p in [Path("index.html"), Path("products.html"), Path("watch.html"), *guides, *watch_pages]:
+              html = p.read_text(encoding="utf-8")
+              assert 'content="index,follow"' in html
+              assert 'rel="canonical"' in html
 
           for p in [Path("guides") / f"{artist['slug']}.html" for artist in catalog]:
               html = p.read_text(encoding="utf-8")
               assert 'class="real-product-strip"' in html
+
+          sitemap = Path("sitemap.xml").read_text(encoding="utf-8")
+          assert sitemap.count("<url>") == 28
+          for required in [
+              "/guides/how-to-buy-official-kpop-merch.html",
+              "/guides/kpop-concert-essentials.html",
+              "/guides/kpop-album-gift-guide.html",
+              "/guides/kpop-photocard-binder-guide.html",
+              "/guides/kpop-gifts-for-beginners.html",
+              "/guides/kpop-gifts-under-25.html",
+              "/guides/index.html",
+          ]:
+              assert required in sitemap
 
           products_html = Path("products.html").read_text(encoding="utf-8")
           assert products_html.count('class="verified-product"') == 24
