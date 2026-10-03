@@ -98,6 +98,14 @@ jobs:
           products_html = Path("products.html").read_text(encoding="utf-8")
           assert products_html.count('class="verified-product"') == 24
           assert products_html.count('Verified official product') >= 24
+          assert "https://www.amazon.com/dp/B0GGCX8XSP?tag=unicornmagic2-20" in products_html
+
+          blackpink = [p for p in products if p.get("artist") == "BLACKPINK" and "PINK Ver." in p.get("title", "")]
+          assert len(blackpink) == 1
+          assert blackpink[0].get("amazonAsin") == "B0GGCX8XSP"
+          assert blackpink[0].get("amazonUrl") == "https://www.amazon.com/dp/B0GGCX8XSP?tag=unicornmagic2-20"
+          assert Path("9f0e3d7b8c1a4f6e92d0b7c3a1e5f864.txt").read_text(encoding="utf-8").strip() == "9f0e3d7b8c1a4f6e92d0b7c3a1e5f864"
+          assert Path(".github/workflows/indexnow.yml").exists()
 
           for p in watch_pages:
               html = p.read_text(encoding="utf-8")

@@ -21,7 +21,9 @@ This is the standalone repository for K-Pop Finds. The GitHub Pages pilot is now
 
 ## Monetization
 
-Amazon comparison links currently use the existing Associates tracking tag as a placeholder. Verified product cards link to official artist/label/franchise stores first, then offer exact-name Amazon searches. Add the final K-Pop Finds URL/domain in Associates Central before promoting the site and preferably create a dedicated tracking ID.
+Amazon links currently use the existing Associates tracking tag as a placeholder. Verified product cards link to official artist/label/franchise stores first. Where an exact Amazon item has been independently matched, the paid button can go directly to that ASIN; otherwise it stays a clearly labelled exact-name marketplace search. Add the final K-Pop Finds URL/domain in Associates Central before promoting the site and preferably create a dedicated tracking ID so K-Pop Finds performance is separable from Unicorn Finds.
+
+For product images, do not scrape Amazon retail pages. Use Amazon Product Links from Associates Central, or the Creators API once the account is eligible. Amazon's current Creators API requires 10 qualifying sales in the previous 30 days; image URLs and most other API product fields have a one-day cache window. The site should therefore treat Creators API imagery as short-lived data, not permanent local assets.
 
 AdSense is disabled until an approved `ca-pub-...` ID and ad-unit IDs are added to `assets/ads-config.js`.
 
@@ -36,3 +38,9 @@ The current verified catalog contains 24 named official products (three per fand
 ## Video pages
 
 Each fandom has a page under `/watch/` with a privacy-enhanced `youtube-nocookie.com` embed of the featured official video from `catalog.json`, plus links to the fandom buying guide and three verified products. K-Pop Finds does not host video files, lyrics or copied thumbnails.
+
+## Discovery status
+
+The GitHub Pages pilot is submitted to IndexNow from GitHub Actions after main-branch content changes. The key is hosted inside the /kpop-finds/ path and the workflow supplies that exact keyLocation, which allows IndexNow to verify and submit URLs under the same path.
+
+Google Search Console is not yet connected for this GitHub Pages URL. Add and verify the URL-prefix property `https://alexgianni777-tech.github.io/kpop-finds/` in Search Console before expecting GSC reporting for this site.
