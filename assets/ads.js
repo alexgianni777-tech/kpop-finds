@@ -18,7 +18,6 @@
     node.querySelector(".ad-mount").appendChild(ins);
     return true;
   });
-  if (!active.length) return;
 
   const script = document.createElement("script");
   script.async = true;
