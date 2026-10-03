@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://alexgianni777-tech.github.io/kpop-finds/sitemap.xml
