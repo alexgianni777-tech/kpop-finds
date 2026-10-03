@@ -4,7 +4,7 @@ Independent K-pop merch and gift guides for fans of BTS, BLACKPINK, Stray Kids, 
 
 ## Status
 
-This is the standalone repository for K-Pop Finds. The first public version is intentionally `noindex,nofollow` while the domain, Amazon Associates site registration and AdSense approval are finalized.
+This is the standalone repository for K-Pop Finds. The GitHub Pages pilot is now `index,follow` with canonical URLs, `robots.txt` and an XML sitemap so search engines can discover the content. A custom domain and dedicated Amazon Associates tracking ID are still recommended before larger promotion.
 
 ## Included
 
@@ -12,6 +12,8 @@ This is the standalone repository for K-Pop Finds. The first public version is i
 - 8 redesigned fandom guides with official-store-first checks, licensed artist media, three verified real products and visual shopping paths
 - Redesigned cross-fandom light-stick buyer guide
 - Redesigned K-pop gifts for teens guide
+- 6 additional search-intent guides for authenticity, concert essentials, albums, photocards, beginners and budget gifts
+- Buyer-guide hub plus XML sitemap and crawlable robots.txt
 - 24-product verified official-store directory in `verified-products.json` and `products.html`
 - 8 privacy-enhanced YouTube watch + shop pages plus `watch.html` hub
 - Dormant AdSense placements
