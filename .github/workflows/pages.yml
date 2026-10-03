@@ -53,6 +53,12 @@ jobs:
           assert Path("verified-products.json").exists()
           assert Path("sitemap.xml").exists()
           assert Path("robots.txt").exists()
+          assert Path("ads.txt").exists()
+          assert "https://kpopfinds.online/" in index
+          assert "alexgianni777-tech.github.io/kpop-finds" not in index
+          assert "https://kpopfinds.online/" in Path("sitemap.xml").read_text(encoding="utf-8")
+          assert "https://kpopfinds.online/sitemap.xml" in Path("robots.txt").read_text(encoding="utf-8")
+          assert Path("ads.txt").read_text(encoding="utf-8").strip() == "google.com, pub-8108579336605864, DIRECT, f08c47fec0942fa0"
           assert index.count('class="artist-photo"') >= 7
           assert index.count('class="video-link"') == 8
           assert index.count("youtube.com/watch") >= 8
