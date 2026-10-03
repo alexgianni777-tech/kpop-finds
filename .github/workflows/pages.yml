@@ -31,10 +31,14 @@ jobs:
           root = Path(".")
           index = Path("index.html").read_text(encoding="utf-8")
           catalog = json.loads(Path("catalog.json").read_text(encoding="utf-8"))
+          products = json.loads(Path("verified-products.json").read_text(encoding="utf-8"))
           guides = list(Path("guides").glob("*.html"))
+          watch_pages = list(Path("watch").glob("*.html"))
 
           assert len(catalog) == 8
+          assert len(products) == 24
           assert len(guides) == 10
+          assert len(watch_pages) == 8
           assert "K‑Pop Finds" in index
           assert "noindex,nofollow" in index
           assert "As an Amazon Associate I earn from qualifying purchases." in index
@@ -44,6 +48,9 @@ jobs:
           assert Path("assets/ads.js").exists()
           assert Path("privacy.html").exists()
           assert Path("media-credits.html").exists()
+          assert Path("products.html").exists()
+          assert Path("watch.html").exists()
+          assert Path("verified-products.json").exists()
           assert index.count('class="artist-photo"') >= 7
           assert index.count('class="video-link"') == 8
           assert index.count("youtube.com/watch") >= 8
@@ -53,7 +60,7 @@ jobs:
                   assert artist.get("artistImage"), artist["slug"]
                   assert artist.get("photoSource"), artist["slug"]
 
-          for p in [Path("index.html"), Path("privacy.html"), Path("media-credits.html"), *guides]:
+          for p in [Path("index.html"), Path("privacy.html"), Path("media-credits.html"), Path("products.html"), Path("watch.html"), *guides, *watch_pages]:
               html = p.read_text(encoding="utf-8")
               assert "<title>" in html
               assert "<meta name=\"description\"" in html
@@ -61,6 +68,20 @@ jobs:
           for p in guides:
               html = p.read_text(encoding="utf-8")
               assert 'rel="sponsored nofollow noopener noreferrer"' in html
+
+          for p in [Path("guides") / f"{artist['slug']}.html" for artist in catalog]:
+              html = p.read_text(encoding="utf-8")
+              assert 'class="real-product-strip"' in html
+
+          products_html = Path("products.html").read_text(encoding="utf-8")
+          assert products_html.count('class="verified-product"') == 24
+          assert products_html.count('Verified official product') >= 24
+
+          for p in watch_pages:
+              html = p.read_text(encoding="utf-8")
+              assert "youtube-nocookie.com/embed/" in html
+              assert 'class="verified-product"' in html
+              assert "../products.html" in html
 
           print("K-Pop Finds validation passed.")
           PY
