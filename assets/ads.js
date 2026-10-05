@@ -19,12 +19,9 @@
     return true;
   });
 
-  const script = document.createElement("script");
-  script.async = true;
-  script.crossOrigin = "anonymous";
-  script.src = "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=" + encodeURIComponent(publisherId);
-  script.onload = () => active.forEach(() => {
+  // The official AdSense verification/Auto Ads script is embedded directly in page <head>.
+  // Queue any manual units here; AdSense processes the queue when its async script is ready.
+  active.forEach(() => {
     try { (window.adsbygoogle = window.adsbygoogle || []).push({}); } catch (_) {}
   });
-  document.head.appendChild(script);
 })();
