@@ -24,7 +24,7 @@ jobs:
       - name: Wait for published IndexNow key
         run: |
           key="9f0e3d7b8c1a4f6e92d0b7c3a1e5f864"
-          url="https://alexgianni777-tech.github.io/kpop-finds/$key.txt"
+          url="https://kpopfinds.online/$key.txt"
           for attempt in 1 2 3 4 5 6 7 8 9 10; do
             body="$(curl -fsS "$url" || true)"
             if [ "$body" = "$key" ]; then
@@ -47,12 +47,12 @@ jobs:
           root = ET.fromstring(Path("sitemap.xml").read_text(encoding="utf-8"))
           ns = {"sm": "http://www.sitemaps.org/schemas/sitemap/0.9"}
           urls = [n.text for n in root.findall("sm:url/sm:loc", ns) if n.text]
-          expected_prefix = "https://alexgianni777-tech.github.io/kpop-finds/"
+          expected_prefix = "https://kpopfinds.online/"
           urls = [u for u in urls if u.startswith(expected_prefix)]
           payload = {
-              "host": "alexgianni777-tech.github.io",
+              "host": "kpopfinds.online",
               "key": key,
-              "keyLocation": f"https://alexgianni777-tech.github.io/kpop-finds/{key}.txt",
+              "keyLocation": f"https://kpopfinds.online/{key}.txt",
               "urlList": urls,
           }
           Path("/tmp/indexnow.json").write_text(json.dumps(payload), encoding="utf-8")

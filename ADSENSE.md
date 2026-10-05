@@ -1,13 +1,20 @@
-# AdSense launch notes for K-Pop Finds
+# AdSense setup for K-Pop Finds
 
-The prototype has reserved display-ad placements but loads **no AdSense network code** until a real publisher ID and ad-unit slot IDs are supplied.
+K-Pop Finds now has its own production domain: `https://kpopfinds.online/`.
 
-Before launch on a separate domain:
+## Publisher setup
 
-1. Add the new K-Pop Finds domain to AdSense > Sites and request review.
-2. Add the AdSense verification snippet when Google provides it.
-3. Create responsive display units for `home_top`, `home_mid`, and `guide_mid`.
-4. Add the real `ca-pub-...` and slot IDs to `assets/ads-config.js`.
-5. Add the exact `ads.txt` line supplied by AdSense.
-6. Configure Google's European regulations message or another Google-certified CMP for EEA/UK/Swiss traffic before personalised ads are served.
-7. Update the privacy page when the site moves from prototype to production.
+- Publisher ID: `ca-pub-8108579336605864`
+- The site-wide AdSense loader is configured for Auto ads.
+- Manual containers remain available for `home_top`, `home_mid`, and `guide_mid` if we later create manual units.
+- `ads.txt` declares the same publisher as a direct Google seller.
+
+## Required AdSense account step
+
+Add `kpopfinds.online` under **AdSense → Sites** and submit it for site review. The code is ready, but Google controls whether ads may serve on this new domain.
+
+For EEA/UK/Swiss traffic, keep Google's European regulations message or another Google-certified CMP enabled where required.
+
+## Conversion guardrail
+
+Do not crowd high-intent Amazon CTAs with manual display ads. Start with Auto ads and adjust density after traffic and revenue data exist.
