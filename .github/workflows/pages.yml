@@ -59,6 +59,9 @@ jobs:
           assert "https://kpopfinds.online/" in Path("sitemap.xml").read_text(encoding="utf-8")
           assert "https://kpopfinds.online/sitemap.xml" in Path("robots.txt").read_text(encoding="utf-8")
           assert Path("ads.txt").read_text(encoding="utf-8").strip() == "google.com, pub-8108579336605864, DIRECT, f08c47fec0942fa0"
+          adsense_snippet = 'pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8108579336605864'
+          for html_path in list(Path(".").glob("*.html")) + list(Path("guides").glob("*.html")) + list(Path("watch").glob("*.html")):
+              assert adsense_snippet in html_path.read_text(encoding="utf-8"), html_path
           assert index.count('class="artist-photo"') >= 7
           assert index.count('class="video-link"') == 8
           assert index.count("youtube.com/watch") >= 8
