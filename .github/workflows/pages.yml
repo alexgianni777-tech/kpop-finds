@@ -124,6 +124,42 @@ jobs:
 
           print("K-Pop Finds validation passed.")
           PY
+      - name: Inject Google Analytics
+        env:
+          GA_MEASUREMENT_ID: G-R2WZN848NX
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import os, re
+
+          ga_id = os.environ["GA_MEASUREMENT_ID"]
+          snippet = f"""<!-- Google tag (gtag.js) -->
+          <script async src="https://www.googletagmanager.com/gtag/js?id={ga_id}"></script>
+          <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){{dataLayer.push(arguments);}}
+            gtag('js', new Date());
+            gtag('config', '{ga_id}');
+          </script>"""
+
+          html_paths = (
+              list(Path(".").glob("*.html"))
+              + list(Path("guides").glob("*.html"))
+              + list(Path("watch").glob("*.html"))
+          )
+
+          for p in html_paths:
+              html = p.read_text(encoding="utf-8")
+              if ga_id in html:
+                  continue
+              match = re.search(r"<head\b[^>]*>", html, flags=re.IGNORECASE)
+              if not match:
+                  raise RuntimeError(f"No <head> tag found in {p}")
+              html = html[:match.end()] + "\n  " + snippet.replace("\n", "\n  ") + "\n" + html[match.end():]
+              p.write_text(html, encoding="utf-8")
+
+          print(f"Google Analytics {ga_id} injected into {len(html_paths)} HTML pages.")
+          PY
       - name: Prepare static artifact
         run: touch .nojekyll
       - name: Setup Pages
