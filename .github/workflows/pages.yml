@@ -37,7 +37,7 @@ jobs:
 
           assert len(catalog) == 8
           assert len(products) == 24
-          assert len(guides) == 17
+          assert len(guides) == 18
           assert len(watch_pages) == 8
           assert "K‑Pop Finds" in index
           assert "index,follow" in index
