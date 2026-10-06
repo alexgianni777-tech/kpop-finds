@@ -50,6 +50,7 @@ jobs:
           assert Path("media-credits.html").exists()
           assert Path("products.html").exists()
           assert Path("watch.html").exists()
+          assert Path("tools/kpop-gift-finder.html").exists()
           assert Path("verified-products.json").exists()
           assert Path("sitemap.xml").exists()
           assert Path("robots.txt").exists()
@@ -92,7 +93,7 @@ jobs:
               assert 'class="real-product-strip"' in html
 
           sitemap = Path("sitemap.xml").read_text(encoding="utf-8")
-          assert sitemap.count("<url>") == 29
+          assert sitemap.count("<url>") == 30
           for required in [
               "/guides/how-to-buy-official-kpop-merch.html",
               "/guides/kpop-concert-essentials.html",
