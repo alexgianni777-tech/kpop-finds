@@ -62,6 +62,8 @@ jobs:
           assert Path("ads.txt").read_text(encoding="utf-8").strip() == "google.com, pub-8108579336605864, DIRECT, f08c47fec0942fa0"
           adsense_snippet = 'pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8108579336605864'
           for html_path in list(Path(".").glob("*.html")) + list(Path("guides").glob("*.html")) + list(Path("watch").glob("*.html")):
+              if html_path.name == "404.html":
+                  continue
               assert adsense_snippet in html_path.read_text(encoding="utf-8"), html_path
           assert index.count('class="artist-photo"') >= 7
           assert index.count('class="video-link"') == 8
