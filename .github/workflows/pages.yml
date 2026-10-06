@@ -92,7 +92,7 @@ jobs:
               assert 'class="real-product-strip"' in html
 
           sitemap = Path("sitemap.xml").read_text(encoding="utf-8")
-          assert sitemap.count("<url>") == 28
+          assert sitemap.count("<url>") == 29
           for required in [
               "/guides/how-to-buy-official-kpop-merch.html",
               "/guides/kpop-concert-essentials.html",
@@ -187,6 +187,84 @@ jobs:
               p.write_text(html, encoding="utf-8")
 
           print(f"Google Analytics {ga_id} injected into {len(html_paths)} HTML pages.")
+          PY
+      - name: Enrich SEO metadata
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import json, re
+
+          base = "https://kpopfinds.online"
+          default_image = base + "/assets/kpop-finds-card.svg"
+          favicon = '<link rel="icon" href="/assets/kpop-finds-card.svg" type="image/svg+xml">'
+          og_image = f'<meta property="og:image" content="{default_image}"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="{default_image}">'
+
+          def repair(obj):
+              if isinstance(obj, list):
+                  for item in obj:
+                      repair(item)
+              elif isinstance(obj, dict):
+                  types = obj.get("@type")
+                  type_set = set(types if isinstance(types, list) else [types]) if types else set()
+                  if "Article" in type_set and "image" not in obj:
+                      obj["image"] = [default_image]
+                  if "Organization" in type_set and "logo" not in obj:
+                      obj["logo"] = {"@type":"ImageObject","url":default_image}
+                  for value in obj.values():
+                      repair(value)
+
+          html_paths = list(Path(".").glob("*.html")) + list(Path("guides").glob("*.html")) + list(Path("watch").glob("*.html"))
+          for p in html_paths:
+              html = p.read_text(encoding="utf-8")
+              if 'rel="icon"' not in html:
+                  html = html.replace("</head>", favicon + "\n</head>")
+              if 'property="og:image"' not in html:
+                  html = html.replace("</head>", og_image + "\n</head>")
+
+              scripts = list(re.finditer(r'<script type="application/ld\+json">(.*?)</script>', html, flags=re.S))
+              has_article = False
+              for m in reversed(scripts):
+                  raw = m.group(1)
+                  try:
+                      data = json.loads(raw)
+                  except Exception:
+                      continue
+                  def contains_article(x):
+                      if isinstance(x, list):
+                          return any(contains_article(v) for v in x)
+                      if isinstance(x, dict):
+                          t=x.get("@type")
+                          ts=set(t if isinstance(t,list) else [t]) if t else set()
+                          return "Article" in ts or any(contains_article(v) for v in x.values())
+                      return False
+                  has_article = has_article or contains_article(data)
+                  repair(data)
+                  new = '<script type="application/ld+json">' + json.dumps(data, ensure_ascii=False).replace("<","\\u003c") + '</script>'
+                  html = html[:m.start()] + new + html[m.end():]
+
+              if p.parent.name == "guides" and p.name != "index.html" and not has_article:
+                  title_match = re.search(r'<title>(.*?)</title>', html, flags=re.S|re.I)
+                  desc_match = re.search(r'<meta name="description" content="(.*?)">', html, flags=re.S|re.I)
+                  canon_match = re.search(r'<link rel="canonical" href="(.*?)">', html, flags=re.S|re.I)
+                  title = re.sub(r'\s+',' ',title_match.group(1)).strip() if title_match else p.stem
+                  desc = desc_match.group(1) if desc_match else ""
+                  canonical = canon_match.group(1) if canon_match else base + "/guides/" + p.name
+                  schema = {
+                      "@context":"https://schema.org",
+                      "@type":"Article",
+                      "headline": title.split(" | ")[0],
+                      "description": desc,
+                      "url": canonical,
+                      "image":[default_image],
+                      "dateModified":"2026-10-06",
+                      "author":{"@type":"Organization","name":"K-Pop Finds","url":base+"/","logo":{"@type":"ImageObject","url":default_image}},
+                      "publisher":{"@type":"Organization","name":"K-Pop Finds","url":base+"/","logo":{"@type":"ImageObject","url":default_image}}
+                  }
+                  snippet='<script type="application/ld+json">' + json.dumps(schema, ensure_ascii=False).replace("<","\\u003c") + '</script>'
+                  html=html.replace("</head>",snippet+"\n</head>")
+
+              p.write_text(html, encoding="utf-8")
+          print(f"SEO metadata enriched on {len(html_paths)} pages.")
           PY
       - name: Prepare static artifact
         run: touch .nojekyll
