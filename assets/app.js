@@ -47,7 +47,7 @@ function render(){
     '<p class="small">Paid links. Check the seller, exact version and whether the listing clearly identifies official/licensed merchandise before purchase.</p>';
 }
 
-if(button)button.addEventListener('click',render);
+if(button)button.addEventListener('click',()=>{ if(typeof gtag==='function') gtag('event','gift_finder_use',{fandom:artist?.value||'',gift_type:type?.value||'',page_path:location.pathname}); render(); });
 
 document.querySelectorAll('.route-chip').forEach(chip=>{
   chip.addEventListener('click',()=>{
