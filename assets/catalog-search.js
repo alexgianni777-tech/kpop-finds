@@ -14,12 +14,20 @@
    });
    filters.forEach(button => button.setAttribute('aria-pressed', String(button.dataset.filter === fandom)));
    document.getElementById('catalog-count').textContent = `${count} of ${cards.length} products`;
-   document.getElementById('catalog-empty').hidden = count !== 0;
+   const empty = document.getElementById('catalog-empty');
+   empty.replaceChildren();
+   if (count === 0) {
+     const heading = document.createElement('strong'); heading.textContent = 'No matching products';
+     const help = document.createElement('p'); help.textContent = 'Try a shorter word, another fandom, or reset both filters.';
+     const reset = document.createElement('button'); reset.type = 'button'; reset.id = 'catalog-reset'; reset.textContent = 'Show all products';
+     reset.addEventListener('click', () => { query.value = ''; fandom = 'all'; render(); query.focus(); });
+     empty.append(heading, help, reset);
+   }
+   empty.hidden = count !== 0;
  }
  filters.forEach(button => button.addEventListener('click', () => { fandom = button.dataset.filter; render(); }));
  query.addEventListener('input', render);
  document.getElementById('catalog-clear').addEventListener('click', () => { query.value = ''; render(); query.focus(); });
- document.getElementById('catalog-reset').addEventListener('click', () => { query.value = ''; fandom = 'all'; render(); query.focus(); });
  document.getElementById('catalog-search-controls').hidden = false;
  render();
 })();
