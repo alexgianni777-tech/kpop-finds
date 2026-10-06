@@ -113,6 +113,15 @@ jobs:
           assert len(blackpink) == 1
           assert blackpink[0].get("amazonAsin") == "B0GGCX8XSP"
           assert blackpink[0].get("amazonUrl") == "https://www.amazon.com/dp/B0GGCX8XSP?tag=unicornmagic2-20"
+
+          for product in products:
+              amazon_url = product.get("amazonUrl")
+              if not amazon_url:
+                  continue
+              asin = product.get("amazonAsin")
+              assert asin, product.get("title")
+              assert f"/dp/{asin}" in amazon_url, product.get("title")
+              assert "tag=unicornmagic2-20" in amazon_url, product.get("title")
           assert Path("9f0e3d7b8c1a4f6e92d0b7c3a1e5f864.txt").read_text(encoding="utf-8").strip() == "9f0e3d7b8c1a4f6e92d0b7c3a1e5f864"
           assert Path(".github/workflows/indexnow.yml").exists()
 
@@ -216,6 +225,10 @@ jobs:
           html_paths = list(Path(".").glob("*.html")) + list(Path("guides").glob("*.html")) + list(Path("watch").glob("*.html"))
           for p in html_paths:
               html = p.read_text(encoding="utf-8")
+              if "kpop-christmas-gifts.html" not in html:
+                  href = "../guides/kpop-christmas-gifts.html" if p.parent.name in {"guides", "watch"} else "./guides/kpop-christmas-gifts.html"
+                  seasonal = f'<a class="nav-seasonal" href="{href}">Christmas gifts</a>'
+                  html = html.replace("</nav>", seasonal + "</nav>", 1)
               if 'rel="icon"' not in html:
                   html = html.replace("</head>", favicon + "\n</head>")
               if 'property="og:image"' not in html:
