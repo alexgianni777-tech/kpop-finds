@@ -140,6 +140,34 @@ jobs:
             function gtag(){{dataLayer.push(arguments);}}
             gtag('js', new Date());
             gtag('config', '{ga_id}');
+
+            // Track Amazon affiliate clicks as a dedicated GA4 event.
+            document.addEventListener('click', function(event) {{
+              const link = event.target.closest('a[href]');
+              if (!link) return;
+
+              let url;
+              try {{
+                url = new URL(link.href, window.location.href);
+              }} catch (e) {{
+                return;
+              }}
+
+              const host = url.hostname.toLowerCase().replace(/^www\./, '');
+              const isAmazon = host === 'amzn.to' || host === 'amazon.com' || host.startsWith('amazon.') || host.includes('.amazon.');
+              if (!isAmazon) return;
+
+              const card = link.closest('.verified-product, .real-product-strip, .product-card, article, li');
+              const heading = card ? card.querySelector('h1, h2, h3, h4') : null;
+
+              gtag('event', 'amazon_click', {{
+                link_url: url.href,
+                link_text: (link.textContent || '').trim().slice(0, 120),
+                item_name: heading ? heading.textContent.trim().slice(0, 120) : '',
+                item_group: card && card.dataset ? (card.dataset.slug || '') : '',
+                page_path: window.location.pathname
+              }});
+            }});
           </script>"""
 
           html_paths = (
