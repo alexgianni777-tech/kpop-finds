@@ -164,18 +164,23 @@ jobs:
 
               const host = url.hostname.toLowerCase().replace(/^www\./, '');
               const isAmazon = host === 'amzn.to' || host === 'amazon.com' || host.startsWith('amazon.') || host.includes('.amazon.');
-              if (!isAmazon) return;
+              const officialHosts = ['shop.weverse.io','weverse.io','jypj-store.com','shop.katseye.world','global.shop.smtown.com','twiceshop.com','netflix.shop','starship-square.com','www.starship-square.com'];
 
               const card = link.closest('.verified-product, .real-product-strip, .product-card, article, li');
               const heading = card ? card.querySelector('h1, h2, h3, h4') : null;
-
-              gtag('event', 'amazon_click', {{
+              const payload = {{
                 link_url: url.href,
                 link_text: (link.textContent || '').trim().slice(0, 120),
                 item_name: heading ? heading.textContent.trim().slice(0, 120) : '',
                 item_group: card && card.dataset ? (card.dataset.slug || '') : '',
                 page_path: window.location.pathname
-              }});
+              }};
+
+              if (isAmazon) {{
+                gtag('event', 'amazon_click', payload);
+              }} else if (officialHosts.includes(host)) {{
+                gtag('event', 'official_store_click', payload);
+              }}
             }});
           </script>"""
 
@@ -183,6 +188,7 @@ jobs:
               list(Path(".").glob("*.html"))
               + list(Path("guides").glob("*.html"))
               + list(Path("watch").glob("*.html"))
+              + list(Path("tools").glob("*.html"))
           )
 
           for p in html_paths:
@@ -222,11 +228,11 @@ jobs:
                   for value in obj.values():
                       repair(value)
 
-          html_paths = list(Path(".").glob("*.html")) + list(Path("guides").glob("*.html")) + list(Path("watch").glob("*.html"))
+          html_paths = list(Path(".").glob("*.html")) + list(Path("guides").glob("*.html")) + list(Path("watch").glob("*.html")) + list(Path("tools").glob("*.html"))
           for p in html_paths:
               html = p.read_text(encoding="utf-8")
               if "kpop-christmas-gifts.html" not in html:
-                  href = "../guides/kpop-christmas-gifts.html" if p.parent.name in {"guides", "watch"} else "./guides/kpop-christmas-gifts.html"
+                  href = "../guides/kpop-christmas-gifts.html" if p.parent.name in {"guides", "watch", "tools"} else "./guides/kpop-christmas-gifts.html"
                   seasonal = f'<a class="nav-seasonal" href="{href}">Christmas gifts</a>'
                   html = html.replace("</nav>", seasonal + "</nav>", 1)
               if 'rel="icon"' not in html:
