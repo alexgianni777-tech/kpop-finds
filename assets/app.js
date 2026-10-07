@@ -17,7 +17,9 @@ const artists={
   illit:{name:'ILLIT',guide:'./guides/illit.html',official:'https://shop.weverse.io/en/shop/USD/artists/120'},
   riize:{name:'RIIZE',guide:'./guides/riize.html',official:'https://shop.weverse.io/en/shop/USD/artists/151'},
   seventeen:{name:'SEVENTEEN',guide:'./guides/seventeen.html',official:'https://shop.weverse.io/en/shop/USD/artists/7'},
-  babymonster:{name:'BABYMONSTER',guide:'./guides/babymonster.html',official:'https://yg-babymonster-official.jp/news/goods/'}
+  babymonster:{name:'BABYMONSTER',guide:'./guides/babymonster.html',official:'https://yg-babymonster-official.jp/news/goods/'},
+  txt:{name:'TOMORROW X TOGETHER',guide:'./guides/txt.html',official:'https://shop.weverse.io/en/shop/USD/artists/3'},
+  nmixx:{name:'NMIXX',guide:'./guides/nmixx.html',official:'https://jypj-store.com/collections/nmixx-official-goods'}
 };
 
 const typeTerms={
