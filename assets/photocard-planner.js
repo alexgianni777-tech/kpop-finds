@@ -24,6 +24,19 @@
     const check = document.createElement('p');
     check.textContent = 'Check pocket dimensions, ring spacing and binder sheet capacity before buying. Sleeve counts assume one sleeve per planned card; double-sleeving needs a separate inner and outer sleeve supply.';
     result.append(heading, details, check);
+    const next = document.createElement('p');
+    next.textContent = plan.target <= 360
+      ? `Your ${plan.target}-card plan is within the 360-slot count of the fixed-page binder example below. Pocket fit still needs checking. Its pages are included, so do not buy ${plan.sheets} refill sheets for that binder.`
+      : `Your ${plan.target}-card plan exceeds the 360-slot binder example by ${plan.target - 360} cards. Compare a larger suitable setup or split the collection; do not order one 360-slot binder expecting it to hold the whole plan.`;
+    const compare = document.createElement('a');
+    compare.href = plan.target <= 360 ? '#binder-example' : '#choose-storage';
+    compare.className = 'pc-button';
+    compare.textContent = plan.target <= 360 ? 'Check the binder example and Amazon link' : 'Compare storage formats before buying';
+    const sizing = document.createElement('a');
+    sizing.href = '#size-guide'; sizing.textContent = 'Check sleeve and pocket sizes';
+    const actions = document.createElement('p');
+    actions.append(compare, document.createTextNode(' · '), sizing);
+    result.append(next, actions);
     result.hidden = false; print.hidden = false;
   }
   form.addEventListener('submit', update);
