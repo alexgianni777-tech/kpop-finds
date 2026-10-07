@@ -181,6 +181,11 @@ jobs:
 
               if (isAmazon) {{
                 gtag('event', 'amazon_click', payload);
+                if (url.pathname.includes('/dp/')) {{
+                  gtag('event', 'amazon_exact_click', payload);
+                }} else if (url.pathname === '/s' || url.searchParams.has('k')) {{
+                  gtag('event', 'amazon_search_click', payload);
+                }}
               }} else if (officialHosts.includes(host)) {{
                 gtag('event', 'official_store_click', payload);
               }}
