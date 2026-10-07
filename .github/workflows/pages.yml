@@ -37,7 +37,7 @@ jobs:
 
           assert len(catalog) == 8
           assert len(products) == 24
-          assert len(guides) == 22
+          assert len(guides) == 23
           assert len(watch_pages) == 8
           assert "K‑Pop Finds" in index
           assert "index,follow" in index
@@ -95,7 +95,7 @@ jobs:
               assert 'class="real-product-strip"' in html
 
           sitemap = Path("sitemap.xml").read_text(encoding="utf-8")
-          assert sitemap.count("<url>") == 34
+          assert sitemap.count("<url>") == 35
           for required in [
               "/guides/how-to-buy-official-kpop-merch.html",
               "/guides/kpop-concert-essentials.html",
