@@ -15,7 +15,9 @@ const artists={
   ive:{name:'IVE',guide:'./guides/ive.html',official:'https://www.starship-square.com/product/list.html?cate_no=57'},
   'le-sserafim':{name:'LE SSERAFIM',guide:'./guides/le-sserafim.html',official:'https://shop.weverse.io/en/shop/USD/artists/50'},
   illit:{name:'ILLIT',guide:'./guides/illit.html',official:'https://shop.weverse.io/en/shop/USD/artists/120'},
-  riize:{name:'RIIZE',guide:'./guides/riize.html',official:'https://shop.weverse.io/en/shop/USD/artists/151'}
+  riize:{name:'RIIZE',guide:'./guides/riize.html',official:'https://shop.weverse.io/en/shop/USD/artists/151'},
+  seventeen:{name:'SEVENTEEN',guide:'./guides/seventeen.html',official:'https://shop.weverse.io/en/shop/USD/artists/7'},
+  babymonster:{name:'BABYMONSTER',guide:'./guides/babymonster.html',official:'https://yg-babymonster-official.jp/news/goods/'}
 };
 
 const typeTerms={
