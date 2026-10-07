@@ -37,7 +37,7 @@ jobs:
 
           assert len(catalog) == 8
           assert len(products) == 24
-          assert len(guides) == 23
+          assert len(guides) == 25
           assert len(watch_pages) == 8
           assert "K‑Pop Finds" in index
           assert "index,follow" in index
@@ -95,7 +95,7 @@ jobs:
               assert 'class="real-product-strip"' in html
 
           sitemap = Path("sitemap.xml").read_text(encoding="utf-8")
-          assert sitemap.count("<url>") == 35
+          assert sitemap.count("<url>") == 37
           for required in [
               "/guides/how-to-buy-official-kpop-merch.html",
               "/guides/kpop-concert-essentials.html",
@@ -167,7 +167,7 @@ jobs:
 
               const host = url.hostname.toLowerCase().replace(/^www\./, '');
               const isAmazon = host === 'amzn.to' || host === 'amazon.com' || host.startsWith('amazon.') || host.includes('.amazon.');
-              const officialHosts = ['shop.weverse.io','weverse.io','jypj-store.com','shop.katseye.world','global.shop.smtown.com','twiceshop.com','netflix.shop','starship-square.com','www.starship-square.com'];
+              const officialHosts = ['shop.weverse.io','weverse.io','jypj-store.com','shop.katseye.world','global.shop.smtown.com','twiceshop.com','netflix.shop','starship-square.com','www.starship-square.com','yg-babymonster-official.jp','www.yg-babymonster-official.jp'];
 
               const card = link.closest('.verified-product, .real-product-strip, .product-card, article, li');
               const heading = card ? card.querySelector('h1, h2, h3, h4') : null;
