@@ -40,14 +40,18 @@ function updateRouteLink(){
  resultLink.href=url.href;
 }
 function search(q){return 'https://www.amazon.com/s?k='+encodeURIComponent(q)+'&tag=unicornmagic2-20';}
-function render(){
+function render(trackUse=false){
  const a=artists[artist.value], terms=typeTerms[type.value];
  results.innerHTML='<div class="result-head"><strong>'+a.name+' — '+typeLabels[type.value]+'</strong><a href="'+a.guide+'">Open fandom guide →</a></div>'+
  '<div class="finder-note">Start with the <a href="'+a.official+'" target="_blank" rel="noopener noreferrer">official merch source ↗</a> to understand current naming and versions.</div>'+
  terms.map((term,i)=>'<a class="result-item" target="_blank" rel="sponsored nofollow noopener noreferrer" href="'+search(a.name+' '+term)+'"><strong>'+(i+1)+'. '+a.name+' '+term+'</strong><span>Amazon search ↗</span></a>').join('')+
  '<p class="small">Paid links. Verify seller, exact version and official/licensed status before purchase.</p>';
  updateRouteLink();
- if(typeof gtag==='function') gtag('event','gift_finder_use',{fandom:artist.value,gift_type:type.value,page_path:location.pathname});
+ if(trackUse && typeof gtag==='function') gtag('event','gift_finder_use',{fandom:artist.value,gift_type:type.value,page_path:location.pathname});
 }
-document.querySelector('#find').addEventListener('click',render); render();
+results.addEventListener('click',(event)=>{
+ const link=event.target.closest('a.result-item');
+ if(link && typeof gtag==='function') gtag('event','amazon_click',{fandom:artist.value,gift_type:type.value,page_path:location.pathname,link_type:'gift_finder_search'});
+});
+document.querySelector('#find').addEventListener('click',()=>render(true)); render();
 </script></body></html>
