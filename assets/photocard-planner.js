@@ -1,3 +1,24 @@
+// A local text download keeps the calculated list usable away from this page.
+function addPlanDownload(result, title, filename, source) {
+  const text = title + '\n\n' + result.innerText + '\n\nSource: ' + source + '\nEstimates only. Check sizes, quantities and current retailer details before buying.\n';
+  const button = document.createElement('button');
+  button.type = 'button';
+  button.className = 'button pc-button plan-download';
+  button.textContent = 'Download shopping list (.txt)';
+  button.addEventListener('click', () => {
+    const url = URL.createObjectURL(new Blob([text], {type: 'text/plain;charset=utf-8'}));
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = filename;
+    document.body.append(link);
+    link.click();
+    link.remove();
+    // Allow the browser to start reading the file before releasing the object URL.
+    setTimeout(() => URL.revokeObjectURL(url), 30000);
+  });
+  result.append(button);
+}
+
 (() => {
   function calculate(cards, spare, slots, pack) {
     if (![cards, spare, slots, pack].every(Number.isInteger) || cards < 1 || cards > 100000 || spare < 0 || spare > 100000 || ![4, 8, 9, 18].includes(slots) || pack < 1 || pack > 10000) return null;
@@ -38,6 +59,7 @@
     actions.append(compare, document.createTextNode(' · '), sizing);
     result.append(next, actions);
     result.hidden = false; print.hidden = false;
+    addPlanDownload(result, "Photocard storage shopping list", "photocard-shopping-list.txt", "https://kpopfinds.online/guides/kpop-photocard-binder-guide.html");
   }
   form.addEventListener('submit', update);
   form.addEventListener('input', () => { result.hidden = true; print.hidden = true; });
@@ -68,7 +90,7 @@
   panel.append(help, save, document.createTextNode(' '), forget, status);
   form.after(panel);
   const style = document.createElement('style');
-  style.textContent = '.plan-save-controls{margin:1rem 0;padding:1rem;border:1px solid currentColor;border-radius:12px}.plan-save-controls button{margin:.25rem;min-height:44px}.plan-save-controls p{margin:.5rem 0}@media print{.plan-save-controls{display:none}}';
+  style.textContent = '.plan-save-controls{margin:1rem 0;padding:1rem;border:1px solid currentColor;border-radius:12px}.plan-save-controls button{margin:.25rem;min-height:44px}.plan-save-controls p{margin:.5rem 0}@media print{.plan-save-controls,.plan-download{display:none}}';
   document.head.append(style);
   let saved = false;
   try {
