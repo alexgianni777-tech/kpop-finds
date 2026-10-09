@@ -49,9 +49,6 @@ function render(trackUse=false){
  updateRouteLink();
  if(trackUse && typeof gtag==='function') gtag('event','gift_finder_use',{fandom:artist.value,gift_type:type.value,page_path:location.pathname});
 }
-results.addEventListener('click',(event)=>{
- const link=event.target.closest('a.result-item');
- if(link && typeof gtag==='function') gtag('event','amazon_click',{fandom:artist.value,gift_type:type.value,page_path:location.pathname,link_type:'gift_finder_search'});
-});
+// Amazon clicks are tracked once by the site-wide analytics listener.
 document.querySelector('#find').addEventListener('click',()=>render(true)); render();
 </script></body></html>
