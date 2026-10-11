@@ -110,6 +110,8 @@ jobs:
           products_html = Path("products.html").read_text(encoding="utf-8")
           assert products_html.count('class="verified-product"') == 24
           assert products_html.count('Verified official product') >= 24
+          assert '"@type":"ItemList"' in products_html
+          assert '"numberOfItems":24' in products_html
           assert "https://www.amazon.com/dp/B0GGCX8XSP?tag=unicornmagic2-20" in products_html
 
           blackpink = [p for p in products if p.get("artist") == "BLACKPINK" and "PINK Ver." in p.get("title", "")]
