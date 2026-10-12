@@ -138,7 +138,7 @@ jobs:
 
           print("K-Pop Finds validation passed.")
           PY
-      - name: Inject Google Analytics
+      - name: Validate Amazon affiliate attribution\n        run: python scripts/check_affiliate_links.py\n      - name: Inject Google Analytics
         env:
           GA_MEASUREMENT_ID: G-R2WZN848NX
         run: |
