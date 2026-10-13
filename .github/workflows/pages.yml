@@ -140,6 +140,8 @@ jobs:
           PY
       - name: Validate Amazon affiliate attribution
         run: python scripts/check_affiliate_links.py
+      - name: Validate internal links
+        run: python scripts/check_internal_links.py
       - name: Inject Google Analytics
         env:
           GA_MEASUREMENT_ID: G-R2WZN848NX
