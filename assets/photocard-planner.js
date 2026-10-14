@@ -82,6 +82,13 @@ function addPlanDownload(result, title, filename, source) {
     result.append(next, actions);
     result.hidden = false; print.hidden = false;
     addPlanDownload(result, "Photocard storage shopping list", "photocard-shopping-list.txt", "https://kpopfinds.online/guides/kpop-photocard-binder-guide.html");
+    if (event && event.isTrusted && typeof gtag === 'function') {
+      gtag('event', 'tool_result', {
+        tool_name: 'photocard-binder-calculator',
+        result_type: 'calculation',
+        page_path: window.location.pathname,
+      });
+    }
   }
   form.addEventListener('submit', update);
   form.addEventListener('input', () => { result.hidden = true; print.hidden = true; });

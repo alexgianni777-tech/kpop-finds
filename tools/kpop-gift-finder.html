@@ -47,7 +47,11 @@ function render(trackUse=false){
  terms.map((term,i)=>'<a class="result-item" target="_blank" rel="sponsored nofollow noopener noreferrer" href="'+search(a.name+' '+term)+'"><strong>'+(i+1)+'. '+a.name+' '+term+'</strong><span>Amazon search ↗</span></a>').join('')+
  '<p class="small">Paid links. Verify seller, exact version and official/licensed status before purchase.</p>';
  updateRouteLink();
- if(trackUse && typeof gtag==='function') gtag('event','gift_finder_use',{fandom:artist.value,gift_type:type.value,page_path:location.pathname});
+ if(trackUse && typeof gtag==='function'){
+  const payload={fandom:artist.value,gift_type:type.value,page_path:location.pathname};
+  gtag('event','gift_finder_use',payload);
+  gtag('event','tool_result',{tool_name:'kpop-gift-finder',result_type:artist.value+'-'+type.value,page_path:location.pathname});
+ }
 }
 // Amazon clicks are tracked once by the site-wide analytics listener.
 document.querySelector('#find').addEventListener('click',()=>render(true)); render();
