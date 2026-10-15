@@ -56,6 +56,11 @@ jobs:
               Path("tools/kpop-gift-finder.html"),
           ]:
               assert "tool_result" in measured_tool.read_text(encoding="utf-8"), measured_tool
+          for app_page in [
+              Path("guides/kpop-photocard-binder-guide.html"),
+              Path("guides/kpop-concert-essentials.html"),
+          ]:
+              assert '"@type": "WebApplication"' in app_page.read_text(encoding="utf-8"), app_page
           assert Path("verified-products.json").exists()
           assert Path("sitemap.xml").exists()
           assert Path("robots.txt").exists()
