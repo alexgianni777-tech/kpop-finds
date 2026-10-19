@@ -31,7 +31,7 @@ const typeLabels={
 };
 
 function search(q){
-  return 'https://www.amazon.com/s?k='+encodeURIComponent(q)+'&tag=unicornmagic2-20';
+  return 'https://www.amazon.com/s?k='+encodeURIComponent(q)+'&tag=unicornfin0a9-20';
 }
 
 function render(){
